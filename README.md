@@ -143,7 +143,17 @@ The **Storyboard** is your main workspace. Your project is organized into **sect
 
 **Status dots** at a glance: **IMG** (has start image), **END** (has end image), **AUD** (has audio), **LTX** (has generation prompt), **VID** (has video), **OK** (approved).
 
-### 3. Edit a Solo Shot
+### 3. Load Your Track
+
+For music video workflows, click **Track** in the toolbar to open the audio track panel at the bottom. Load the full-length audio of your video — this can be the full mix with all instruments, or just the vocal stem if you want tighter lipsync from LTX-2 (even without a vocal stem, the Wan2GP LTX-2 workflow can extract vocals automatically if you enable it in the parameters).
+
+![Track panel](docs/screenshots/12-track.png)
+
+Once loaded, you'll see the waveform. Zoom in, select a region, and assign it directly to a shot — the selected audio section is split and saved as a separate WAV file for that shot.
+
+There's also a shortcut: if your shots already have start and end times set, selecting a shot while the Track panel is open will automatically highlight that shot's time region on the waveform. From there, one click assigns the audio.
+
+### 4. Edit a Solo Shot
 
 Click any shot to open the **Shot Editor** on the right. For a **Solo** shot, you'll see fields for prompt, lyrics, concept, and reference images.
 
@@ -153,7 +163,7 @@ Click any shot to open the **Shot Editor** on the right. For a **Solo** shot, yo
 - Assign **start** and optionally **end** reference images for image-to-video generation
 - The shot's status dots update as you fill in each piece
 
-### 4. Work with Multi Shots
+### 5. Work with Multi Shots
 
 A **Multi** shot contains multiple **takes** — different angles or variations of the same concept. Each take has its own ref images, prompt, and video.
 
@@ -163,7 +173,7 @@ A **Multi** shot contains multiple **takes** — different angles or variations 
 - Each take has its own reference images and prompt, and exports as a separate generation job in the queue
 - Hover over take pills on the storyboard card to preview that take's video
 
-### 5. Manage Reference Images
+### 6. Manage Reference Images
 
 Click **Images** in the toolbar to open the **Image Manager** at the bottom of the screen.
 
@@ -174,7 +184,7 @@ Click **Images** in the toolbar to open the **Image Manager** at the bottom of t
 - Drag and drop images directly onto shot cards on the storyboard
 - Switch to the **Audio** tab to upload and manage audio tracks
 
-### 6. Configure Generation Parameters
+### 7. Configure Generation Parameters
 
 Click **Params** in the toolbar to open the **Global LTX-2 Params** editor. These defaults apply to all shots unless overridden.
 
@@ -188,7 +198,7 @@ Click **Params** in the toolbar to open the **Global LTX-2 Params** editor. Thes
 
 Below that, advanced parameters are organized into collapsible groups (Core Generation, Guidance, Audio, Sliding Window, etc.).
 
-### 7. Override Parameters Per Shot
+### 8. Override Parameters Per Shot
 
 Any shot can override the global defaults. In the shot editor, scroll down to the params section and change a value — it turns **crimson** to indicate it's overridden.
 
@@ -196,7 +206,7 @@ Any shot can override the global defaults. In the shot editor, scroll down to th
 
 Click the reset button next to any overridden value to revert it to the global default. This cascade system (`defaults → project globals → per-shot`) lets you set it once and override only where needed.
 
-### 8. Export a Queue ZIP
+### 9. Export a Queue ZIP
 
 When your shots are ready, click **Export ZIP** in the toolbar to open the export panel.
 
@@ -206,7 +216,7 @@ When your shots are ready, click **Export ZIP** in the toolbar to open the expor
 - Check/uncheck individual shots to include or exclude them
 - Click **Export** to download a `queue.zip` containing `queue.json`, reference images, and audio — ready to upload to Wan2GP
 
-### 9. Load the Queue in Wan2GP
+### 10. Load the Queue in Wan2GP
 
 > **Note:** ByteCut Director is designed for [Wan2GP](https://github.com/deepbeepmeep/Wan2GP) **v10.60+** with the **LTX-2 DEV 19B Distilled** model.
 
@@ -220,7 +230,7 @@ Wan2GP will load all your shots and automatically start processing the generatio
 
 Once all videos are generated, they'll be in Wan2GP's output folder — ready to import back into ByteCut Director.
 
-### 10. Import Videos Back
+### 11. Import Videos Back
 
 After your videos are generated, click **Import Videos** to bring them back in.
 
@@ -238,7 +248,7 @@ After your videos are generated, click **Import Videos** to bring them back in.
 
 Imported videos are appended as new versions — previous versions are kept, and you can navigate between them with `← v2/3 →` controls in the shot editor.
 
-### 11. Timeline View
+### 12. Timeline View
 
 Switch to **Timeline** view in the toolbar for a horizontal layout of your entire project, useful for seeing the big picture and checking timing across sections.
 
