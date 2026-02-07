@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-surface-50 text-gray-100 font-sans;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-surface-100;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-surface-400 rounded;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-surface-500;
+  }
+}
+
+@layer components {
+  .shot-card {
+    @apply bg-surface-200 border border-surface-400 rounded-lg p-3 cursor-pointer
+           transition-all duration-150 hover:border-crimson-500 hover:bg-surface-300;
+  }
+
+  .shot-card.selected {
+    @apply border-crimson-500 bg-surface-300 ring-1 ring-crimson-500/30;
+  }
+
+  .badge {
+    @apply text-xs font-semibold px-2 py-0.5 rounded-full;
+  }
+
+  .badge-solo {
+    @apply bg-blue-900/50 text-blue-300 border border-blue-700/50;
+  }
+
+  .badge-multi {
+    @apply bg-amber-900/50 text-amber-300 border border-amber-700/50;
+  }
+
+  .btn {
+    @apply px-3 py-1.5 rounded-md font-medium text-sm transition-colors;
+  }
+
+  .btn-primary {
+    @apply bg-crimson-500 text-white hover:bg-crimson-400;
+  }
+
+  .btn-secondary {
+    @apply bg-surface-400 text-gray-200 hover:bg-surface-500;
+  }
+
+  .btn-ghost {
+    @apply text-gray-400 hover:text-gray-200 hover:bg-surface-300;
+  }
+
+  .input {
+    @apply bg-surface-100 border border-surface-400 rounded-md px-3 py-1.5 text-sm
+           text-gray-200 placeholder-gray-500 focus:outline-none focus:border-crimson-500
+           focus:ring-1 focus:ring-crimson-500/30;
+  }
+
+  .textarea {
+    @apply bg-surface-100 border border-surface-400 rounded-md px-3 py-2 text-sm
+           text-gray-200 placeholder-gray-500 focus:outline-none focus:border-crimson-500
+           focus:ring-1 focus:ring-crimson-500/30 resize-y;
+  }
+
+  .panel {
+    @apply bg-surface-100 border-surface-300;
+  }
+}

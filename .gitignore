@@ -1,0 +1,12 @@
+node_modules/
+dist/
+data/**
+!data/
+!data/projects/.gitkeep
+!data/images/.gitkeep
+!data/images/thumbs/.gitkeep
+!data/audio/.gitkeep
+.env
+CLAUDE.md
+.claude/
+*.log
