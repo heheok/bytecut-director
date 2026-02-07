@@ -16,8 +16,10 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview"
   },
+  "optionalDependencies": {
+    "@rollup/rollup-win32-x64-msvc": "^4.57.1"
+  },
   "dependencies": {
-    "@rollup/rollup-win32-x64-msvc": "^4.57.1",
     "archiver": "^7.0.1",
     "cors": "^2.8.5",
     "express": "^4.21.0",
