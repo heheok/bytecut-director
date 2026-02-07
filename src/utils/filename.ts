@@ -6,6 +6,25 @@ export function sanitizeFilename(name: string): string {
 }
 
 /**
+ * Build the output filename stem for a shot or take.
+ * Includes a zero-padded shot index to avoid collisions when
+ * multiple shots in the same section share the same name.
+ *
+ *   Solo:  "sectionname_01_shotname"
+ *   Take:  "sectionname_01_shotname_takelabel"
+ */
+export function buildShotStem(
+  sectionName: string,
+  shotIndex: number,
+  shotName: string,
+  takeLabel?: string
+): string {
+  const pad = String(shotIndex + 1).padStart(2, '0');
+  const base = `${sanitizeFilename(sectionName)}_${pad}_${sanitizeFilename(shotName)}`;
+  return takeLabel ? `${base}_${sanitizeFilename(takeLabel)}` : base;
+}
+
+/**
  * Parse a video file stem to extract the base name and ordinal.
  * Handles OS/tool dedup patterns like:
  *   "name"     → { base: "name", ordinal: 1 }

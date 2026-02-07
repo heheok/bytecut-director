@@ -4,12 +4,13 @@ import { useUIStore } from '../../stores/uiStore';
 import { DEFAULT_LTX_PARAMS } from '../../types/project';
 import type { Shot, Take } from '../../types/project';
 import { formatTimestamp } from '../../utils/time';
-import { sanitizeFilename } from '../../utils/filename';
+import { buildShotStem } from '../../utils/filename';
 
 interface ExportItem {
   id: string;
   label: string;
   sectionName: string;
+  shotIndex: number;
   shot: Shot;
   take?: Take;
   hasImage: boolean;
@@ -32,7 +33,8 @@ export function ExportPanel() {
 
     const result: ExportItem[] = [];
     for (const section of project.sections) {
-      for (const shot of section.shots) {
+      for (let si = 0; si < section.shots.length; si++) {
+        const shot = section.shots[si];
         if (shot.type === 'multi' && shot.takes && shot.takes.length > 0) {
           // Each take becomes a separate export item
           for (const take of shot.takes) {
@@ -42,6 +44,7 @@ export function ExportPanel() {
               id: `${shot.id}_${take.id}`,
               label: `${shot.name} > ${take.label}`,
               sectionName: section.name,
+              shotIndex: si,
               shot,
               take,
               hasImage: hasImg,
@@ -56,6 +59,7 @@ export function ExportPanel() {
             id: shot.id,
             label: shot.name,
             sectionName: section.name,
+            shotIndex: si,
             shot,
             hasImage: shot.refImages.length > 0,
             hasEndImage: (shot.endRefImages || []).length > 0,
@@ -123,9 +127,10 @@ export function ExportPanel() {
           ? (item.take.endRefImages || []).find((i) => i.id === item.take!.selectedEndRefImageId)
           : (item.shot.endRefImages || []).find((i) => i.id === item.shot.selectedEndRefImageId);
 
-        const outputName = item.take
-          ? `${sanitizeFilename(item.sectionName)}_${sanitizeFilename(item.shot.name)}_${sanitizeFilename(item.take.label)}`
-          : `${sanitizeFilename(item.sectionName)}_${sanitizeFilename(item.shot.name)}`;
+        const outputName = buildShotStem(
+          item.sectionName, item.shotIndex, item.shot.name,
+          item.take?.label
+        );
 
         return {
           prompt: item.shot.prompt,

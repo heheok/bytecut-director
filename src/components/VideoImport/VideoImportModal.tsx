@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useProjectStore } from '../../stores/projectStore';
 import { useUIStore } from '../../stores/uiStore';
-import { sanitizeFilename, matchVideoFiles } from '../../utils/filename';
+import { buildShotStem, matchVideoFiles } from '../../utils/filename';
 import { api } from '../../utils/api';
 
 interface ScannedFile {
@@ -101,17 +101,18 @@ export function VideoImportModal() {
     if (!project) return [];
     const items: { stem: string; label: string }[] = [];
     for (const section of project.sections) {
-      for (const shot of section.shots) {
+      for (let si = 0; si < section.shots.length; si++) {
+        const shot = section.shots[si];
         if (shot.type === 'multi' && shot.takes && shot.takes.length > 0) {
           for (const take of shot.takes) {
             items.push({
-              stem: `${sanitizeFilename(section.name)}_${sanitizeFilename(shot.name)}_${sanitizeFilename(take.label)}`,
+              stem: buildShotStem(section.name, si, shot.name, take.label),
               label: `${section.name} > ${shot.name} > ${take.label}`,
             });
           }
         } else {
           items.push({
-            stem: `${sanitizeFilename(section.name)}_${sanitizeFilename(shot.name)}`,
+            stem: buildShotStem(section.name, si, shot.name),
             label: `${section.name} > ${shot.name}`,
           });
         }

@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { v4 as uuid } from 'uuid';
 import type { Project, Section, Shot, Take, RefImage, LTXParams } from '../types/project';
 import { DEFAULT_LTX_PARAMS } from '../types/project';
-import { sanitizeFilename, matchVideoFiles } from '../utils/filename';
+import { buildShotStem, matchVideoFiles } from '../utils/filename';
 import { api } from '../utils/api';
 
 interface ProjectState {
@@ -578,15 +578,16 @@ export const useProjectStore = create<ProjectState>((set, get) => ({
     const stemToLocation = new Map<string, { sectionId: string; shotId: string; takeId?: string }>();
 
     for (const section of project.sections) {
-      for (const shot of section.shots) {
+      for (let si = 0; si < section.shots.length; si++) {
+        const shot = section.shots[si];
         if (shot.type === 'multi' && shot.takes && shot.takes.length > 0) {
           for (const take of shot.takes) {
-            const stem = `${sanitizeFilename(section.name)}_${sanitizeFilename(shot.name)}_${sanitizeFilename(take.label)}`;
+            const stem = buildShotStem(section.name, si, shot.name, take.label);
             expectedStems.push(stem);
             stemToLocation.set(stem.toLowerCase(), { sectionId: section.id, shotId: shot.id, takeId: take.id });
           }
         } else {
-          const stem = `${sanitizeFilename(section.name)}_${sanitizeFilename(shot.name)}`;
+          const stem = buildShotStem(section.name, si, shot.name);
           expectedStems.push(stem);
           stemToLocation.set(stem.toLowerCase(), { sectionId: section.id, shotId: shot.id });
         }
