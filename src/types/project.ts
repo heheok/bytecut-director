@@ -200,7 +200,7 @@ export const DEFAULT_LTX_PARAMS: LTXParams = {
   skip_steps_multiplier: 1.75,
   skip_steps_start_step_perc: 0,
   loras_multipliers: '1.0',
-  image_prompt_type: 'S',
+  image_prompt_type: '',
   image_start: null,
   image_end: null,
   model_mode: null,
